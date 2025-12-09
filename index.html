@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js-fifteen</title>
+    <script type="text/javascript">
+        function doClear() {
+            document.getElementById("PizzaForm").reset();
+            return false;
+        }
+
+        function doSubmit(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            if (validateText() == false) {
+                alert("Required data missing in Step 1");
+                return false;
+            }
+            if (validateRadio() == false) {
+                alert("Required data missing in Step 2");
+                return false;
+            }
+            alert("Your pizza order has been submitted.");
+            return false;
+        }
+
+        function validateText() {
+            var customer = document.PizzaForm.customer.value;
+            if (customer.length == 0) return false;
+            var address = document.PizzaForm.address.value;
+            if (address.length == 0) return false;
+            var city = document.PizzaForm.city.value;
+            if (city.length == 0) return false;
+            var phone = document.PizzaForm.phone.value;
+            if (phone.length == 0) return false;
+            return true;
+        }
+
+        function validateRadio() {
+            var sizes = document.getElementsByName("sizes");
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].checked) return true;
+            }
+            return false;
+        }
+    </script>
+</head>
+
+<body>
+    <form name="PizzaForm" id="PizzaForm" onsubmit="return doSubmit(event);">
+        <h1>The JavaScript Pizza Parlor</h1>
+        
+        <div>
+            <h4>Step 1: Enter your name, address, and phone number:</h4>
+            <div style="font-family: 'Courier New', monospace;">
+                Name: &nbsp;&nbsp;&nbsp;<input name="customer" size="50" type="text" required><br>
+                Address: <input name="address" size="50" type="text" required><br>
+                City: &nbsp;&nbsp;&nbsp;<input name="city" size="15" type="text" required>
+                State: <input name="state" size="2" type="text" required>
+                Zip: <input name="zip" size="5" type="text" required><br>
+                Phone: &nbsp;&nbsp;<input name="phone" size="50" type="text" required><br>
+            </div>
+        </div>
+        
+        <div>
+            <h4>Step 2: Select the size of pizza you want:</h4>
+            <div style="font-family: 'Courier New', monospace;">
+                <input name="sizes" type="radio" value="small" required> Small
+                <input name="sizes" type="radio" value="medium"> Medium
+                <input name="sizes" type="radio" value="large"> Large<br>
+            </div>
+        </div>
+        
+        <div>
+            <h4>Step 3: Select the pizza toppings you want:</h4>
+            <div style="font-family: 'Courier New', monospace;">
+                <input name="toppings" type="checkbox" value="pepperoni"> Pepperoni
+                <input name="toppings" type="checkbox" value="canadian_bacon"> Canadian Bacon
+                <input name="toppings" type="checkbox" value="sausage"> Sausage<br>
+                <input name="toppings" type="checkbox" value="mushrooms"> Mushrooms
+                <input name="toppings" type="checkbox" value="pineapple"> Pineapple
+                <input name="toppings" type="checkbox" value="black_olives"> Black Olives<br>
+            </div>
+        </div>
+        
+        <br>
+        <button type="submit">Submit Order</button>
+        <button type="button" onclick="doClear()">Clear Entries</button>
+    </form>
+    
+    <script>
+        // Additional safety check for form submission
+        document.getElementById("PizzaForm").addEventListener("submit", function(e) {
+            if (!doSubmit(e)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
